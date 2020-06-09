@@ -12,8 +12,20 @@
                 </a>
             </div>
             <div class="py-4">
-                <p>{{$todo->description}} </p>
+                <p><address><b>Description</b> : </address> {{$todo->description}} </p>
             </div>
+
+            @if($todo->steps->count() > 0)
+                @foreach ($todo->steps as $step)
+                    <div class="py-2">
+                        <address><b>Steps</b> : </address>
+                        <p>
+                             {{$step->name}}
+                        </p>
+                    </div>
+                @endforeach
+            @endif
+            
         </div>
     </div>
 </div>

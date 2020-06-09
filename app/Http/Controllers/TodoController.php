@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 class TodoController extends Controller
 {
-    
     public function __construct()
     {
         // parent::__construct();
@@ -31,10 +30,16 @@ class TodoController extends Controller
     // Store Todo
     public function store(TodoCreateRequest $req)
     {
+        
         // !Only authenticated user can insert data 
         // $req['user_id'] = auth()->id();
         // Todo::create($req->all());
-        auth()->user()->todos()->create($req->all());
+        $todo = auth()->user()->todos()->create($req->all());
+        if($req->step) {
+            foreach ($req->step as $step) {
+                $todo->steps()->create(['name' => $step]);
+            }
+        }
         return redirect(route('todo.index'))->with('success', 'TO-DO Created Successfully');
     }
 
@@ -53,7 +58,13 @@ class TodoController extends Controller
     // Update Todo
     public function update(TodoCreateRequest $req, Todo $todo)
     {
+        dd($req->all());
         $todo->update(['title' => $req->title, 'description' => $req->description]);
+        if ($req->step) {
+            foreach ($req->step as $step) {
+                $step->update(['name' => $step]);
+            }
+        }
         return redirect()->route('todo.index')->with('success', 'To-Do Updated');
     }
 
@@ -74,6 +85,7 @@ class TodoController extends Controller
     // Todo Delete
     public function destroy(Todo $todo)
     {
+        $todo->steps->each->delete(); // Delete the relationship (Step reletionship)
         $todo->delete();
         return redirect()->back()->with('success', 'Task Deleted!');
     }

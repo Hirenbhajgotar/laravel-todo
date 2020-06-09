@@ -24,6 +24,9 @@
                                     <textarea name="description" id="description" cols="30" rows="3" placeholder="Description" 
                                         class="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
                                 </div>
+                                <div class="mb-4">
+                                    @livewire('step')
+                                </div>
                                 <div class="flex items-center ">
                                     <a href="/todo"
                                         class=" bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
@@ -36,6 +39,7 @@
                                     </button>
                                 </div>
                             </form>
+                            
                         </div>
                     </div>
                 </div>
